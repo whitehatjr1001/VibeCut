@@ -1,35 +1,18 @@
 """
 State management for Video Editing Agent workflow
 """
-from typing import Dict, List, Optional, Any
-from typing_extensions import TypedDict
+from pydantic import BaseModel, Field
+from typing import Optional, List, Dict
+from src.utils.agent_schemas import UserSettings,ClipInfo
+from langgraph.graph import MessagesState
 
-class VideoEditingState(TypedDict):
-    """State schema for the video editing workflow"""
-    
-    # User inputs
-    user_query: str
-    uploaded_clips: List[str]  # VideoDB clip IDs
-    preset_type: str  # "highlights", "reel", "custom"
-    custom_duration: Optional[int]
-    custom_theme: Optional[str]
-    
-    # Workflow state
-    execution_plan: Optional[Dict[str, Any]]
-    search_queries: List[str]
-    retrieved_clips: List[Dict[str, Any]]
-    selected_clips: List[Dict[str, Any]]
-    assembly_config: Optional[Dict[str, Any]]
-    
-    # Results
-    final_video_url: Optional[str]
-    preview_url: Optional[str]
-    
-    # System state
-    current_step: str
-    processing_status: str
-    error_message: Optional[str]
-    
-    # Metadata
-    created_at: Optional[str]
-    duration_estimate: Optional[int]
+
+
+class VibeCutState(MessagesState, BaseModel):
+    plan: Optional[Dict] = None
+    user_settings: UserSettings = Field(default_factory=UserSettings)
+    theme: Optional[str] = None
+    video_sequence: List[ClipInfo] = Field(default_factory=list)
+    multimodal: Optional[str] = None
+
+    # Other fields and inherited properties...

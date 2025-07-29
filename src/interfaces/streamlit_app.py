@@ -7,7 +7,7 @@ import os
 from pathlib import Path
 from src.agent_graph.graph import video_editing_graph
 from src.agent_graph.state import VideoEditingState
-from src.integrations.videodb_client import VideoDBClient
+from src.videodb.videodb_client import VideoDBClient
 from src.config.logger import logger
 
 # Page config

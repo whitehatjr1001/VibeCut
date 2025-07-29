@@ -1,0 +1,22 @@
+#Basic model configuration
+BASIC_MODEL:
+  model: "llama-3.3-70b-versatile"
+  temperature: 0.2
+  api_key: "$GROQ_API_KEY"  # Read from environment for security
+  max_tokens: 6144
+
+
+# You can keep the others for future use
+TOOLS_MODEL:
+  model: "llama-3.3-70b-versatile"
+  temperature: 0.2
+  api_key: "$GROQ_API_KEY"  # Read from environment for security
+  max_tokens: 2040
+
+
+PROMPT_MODEL:
+  model: "llama-3.3-70b-versatile"
+  temperature: 0.2
+  api_key: "$GROQ_API_KEY"  # Read from environment for security
+  max_tokens: 2040
+
