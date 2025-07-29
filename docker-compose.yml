@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  video-editing-agent:
+    build: .
+    ports:
+      - "8501:8501"
+    environment:
+      - VIDEODB_API_KEY=${VIDEODB_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ./data:/app/data
+      - ./temp:/app/temp
+    restart: unless-stopped
+
+  # Optional: Add Redis for caching
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
