@@ -58,7 +58,7 @@ mypy src/
 
 text
 
-## Docker Deployment
+## Docker Deployment  
 
 docker-compose up --build
 
