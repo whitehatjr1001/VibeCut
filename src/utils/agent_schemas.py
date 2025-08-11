@@ -1,27 +1,22 @@
-from pydantic import BaseModel
-from typing import Optional,Literal
-from enum import Enum 
+# src/utils/agent_schemas.py
+from pydantic import BaseModel, Field
+from typing import List, Optional, Union
+from enum import Enum
 
+class IndexType(str, Enum):
+    SPOKEN_WORDS = "spoken_words"
+    SCENES = "scenes"
 
-class PresetType(str, Enum):
-    HIGHLIGHTS = "highlights"
-    REEL = "reel" 
-    CUSTOM = "custom"
-    
-    
-class UserSettings(BaseModel):
-    preset: PresetType
-    duration: Optional[int] = None
-    theme: Optional[str] = None
-    additional_options: Optional[dict] = None
+class VideoUpload(BaseModel):
+    url: str = Field(..., description="Video URL or file path")
+    collection_name: Optional[str] = Field(default="default", description="Collection to upload to")
 
-    voice_over_script: Optional[str] = None
-    ai_script_generation: Optional[bool] = False
-    voice_style: Optional[Literal["male", "female", "neutral", "robotic", "natural"]] = "neutral"
-    voice_language: Optional[str] = "en-US"
+class IndexRequest(BaseModel):
+    video_id: str = Field(..., description="Video ID to index")
+    index_type: IndexType = Field(default=IndexType.SPOKEN_WORDS, description="Type of indexing")
+    scene_prompt: Optional[str] = Field(default=None, description="Custom scene description prompt")
 
-class ClipInfo(BaseModel):
-    clip_id: str
-    start_time: Optional[float] = None
-    end_time: Optional[float] = None
-    order: int
+class SearchRequest(BaseModel):
+    query: str = Field(..., description="Search query")
+    collection_id: Optional[str] = Field(default=None, description="Collection to search in")
+    video_id: Optional[str] = Field(default=None, description="Specific video to search")
